@@ -372,6 +372,31 @@ class glob_htmlParts {
     }
 
     /**
+     * @param string $fileRelativePath
+     * @param boolean $defer optional
+     * @return void
+     */
+    public function createJsScriptTag( $fileRelativePath, $defer = false ) {
+
+        $jsLastModifiedTime     = filemtime( $_SERVER[ 'DOCUMENT_ROOT' ] . $fileRelativePath );
+        $jsVersion              = date( 'YmdHis', $jsLastModifiedTime );
+        $jsHref                 = $fileRelativePath . '?v=' . $jsVersion;
+
+        $html = '<script type="text/javascript" src="' . $jsHref . '"';
+
+        if ( $defer === true ) {
+
+            $html .= " defer";
+
+        }
+
+        $html .= "></script>";
+
+        echo $html;
+
+    }
+
+    /**
      * @throws Exception
      * @return void
      */
